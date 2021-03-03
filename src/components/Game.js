@@ -77,9 +77,15 @@ export default class Game extends React.Component {
             );
         });
 
-        const status = winningSquares
-        ? 'Winner: ' + current.squares[winningSquares[0]]
-        : 'Next Player: ' + (this.xIsNext ? 'X' : 'O')
+        let status;
+
+        if (winningSquares) {
+            status = 'Winner: ' + current.squares[winningSquares[0]];
+        } else if (current.squares.some(s => s === null)) {
+            status = 'Next Player: ' + (this.xIsNext ? 'X' : 'O');
+        } else {
+            status = 'Draw'
+        }
 
         return (
         <div className="game">
