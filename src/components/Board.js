@@ -8,6 +8,7 @@ export default class Board extends React.Component {
         <Square 
             value={this.props.squares[i]} 
             onClick={() => this.props.onClick(i) }
+            style={this.props.highlightedSquares && this.props.highlightedSquares.indexOf(i) !== -1 ? {background: 'yellow'}: {}}
         />
       );
     }

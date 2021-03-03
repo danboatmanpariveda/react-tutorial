@@ -54,7 +54,7 @@ export default class Game extends React.Component {
         for (let i = 0; i < lines.length; i++) {
             const [a, b, c] = lines[i];
             if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-              return squares[a];
+              return [a,b,c];
             }
         }
         return null;
@@ -63,7 +63,7 @@ export default class Game extends React.Component {
     render() {
         const history = this.state.history;
         const current = history[this.state.stepNumber];
-        const winner = this.calculateWinner(current.squares);
+        const winningSquares = this.calculateWinner(current.squares);
 
         const moves = history.map((step, move) => {
             const desc = move 
@@ -77,15 +77,16 @@ export default class Game extends React.Component {
             );
         });
 
-        const status = winner
-                ? 'Winner: ' + winner
-                : 'Next Player: ' + (this.xIsNext ? 'X' : 'O')
+        const status = winningSquares
+        ? 'Winner: ' + current.squares[winningSquares[0]]
+        : 'Next Player: ' + (this.xIsNext ? 'X' : 'O')
 
         return (
         <div className="game">
             <div className="game-board">
             <Board 
                 squares={current.squares}
+                highlightedSquares={winningSquares}
                 onClick={(i) => this.handleClick(i)}
             />
             </div>
